@@ -60,6 +60,6 @@ The application uses Docker to provide a consistent and isolated environment.
 
 ## Summary
 
-This was mostly an interesting project for me. I was able to implement the basic functionalities as instructed such as user authentication, CRUD functionality for todo items (including archiving and also marking tasks as completed) and search functionality. If I had more time, I would have optimized the server-side app by including proper API response, middlewares, and better security.
+This was mostly an interesting project for me. I was able to implement the basic functionalities as instructed such as user authentication, CRUD functionality for todo items (including archiving and also marking tasks as completed) and search functionality. If I had more time, I would have optimized the server-side app by including proper API response, middlewares, and better security. Also, the client-side app needs some work in terms of responsiveness for various screen sizes :)
 
 I made sure to implement all the necessary features because I felt it would give the app a better user experience. While it was fun to build, it didn't come without challenges. I mostly ran into issues setting up Docker for the client-side app (which was scaffolded using Vite.js). I wasn't aware Vite required a special config in the `vite.config.ts` file for the Docker container port mapping to work properly. However, I was able to resolve in the end after hours of debugging via trial and error.
