@@ -14,7 +14,7 @@ Before you start, make sure you have the following tools installed on your machi
 
 To run this project, you will need to add the necessary environment variables to the .env file located in the server directory
 
-NB: all the required environment variables can be found in the .env.sample file
+NB: all the required environment variables can be found in the .env.example file
 
 ## Getting Started
 
