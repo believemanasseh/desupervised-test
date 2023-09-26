@@ -1,17 +1,9 @@
-import { FormEvent } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-interface Props {
-	header: string;
-	submitBtnValue: string;
-	footNote: string;
-	navigateTo: string;
-	navigationComponentText: string;
-	onSubmit: (event: FormEvent<HTMLFormElement>) => void;
-}
+import { AuthFormProps } from '../types/props';
 
-export default function AuthForm(props: Props): JSX.Element {
+const AuthForm = (props: AuthFormProps) => {
 	return (
 		<StyledComponent>
 			<h1 className='header'>{props.header}</h1>
@@ -26,7 +18,7 @@ export default function AuthForm(props: Props): JSX.Element {
 			</p>
 		</StyledComponent>
 	);
-}
+};
 
 const StyledComponent = styled.div`
 	height: auto;
@@ -67,3 +59,5 @@ const StyledComponent = styled.div`
 		color: white;
 	}
 `;
+
+export default AuthForm;

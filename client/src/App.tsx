@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
 	useFetchTodosQuery,
+	useSearchTodosQuery,
 	useCreateTodoMutation,
 	useDeleteTodoMutation,
 	useUpdateTodoMutation,
@@ -21,14 +22,16 @@ import CustomArchiveIcon from './components/CustomArchiveIcon';
 import CustomDeleteIcon from './components/CustomDeleteIcon';
 import { todoData } from './types/todo';
 
-export default function App(): JSX.Element {
+const App = () => {
 	const dispatch = useDispatch();
 	const todoList = useSelector((state: RootState) => state.todo.todoList);
 	const navigate = useNavigate();
 	const isLoggedIn = Cookies.get('isLoggedIn');
 	const [inputValue, setInputValue] = useState<string>('');
 	const [currentSlide, setCurrentSlide] = useState<Number>(1);
+	const [searchInput, setSearchInput] = useState<string>('');
 	const todos = useFetchTodosQuery();
+	const searchedTodos = useSearchTodosQuery(searchInput);
 	const [createTodoMutation] = useCreateTodoMutation();
 	const [deleteTodoMutation] = useDeleteTodoMutation();
 	const [updateTodoMutation] = useUpdateTodoMutation();
@@ -44,7 +47,13 @@ export default function App(): JSX.Element {
 				dispatch(setTodoList(todos.data));
 			}
 		}
-	}, [todos]);
+
+		if (searchInput) {
+			if (searchedTodos?.data) {
+				dispatch(setTodoList(searchedTodos.data));
+			}
+		}
+	}, [todos, searchedTodos]);
 
 	const handleChange = async (e: CheckboxChangeEvent) => {
 		e.preventDefault();
@@ -148,6 +157,11 @@ export default function App(): JSX.Element {
 		}
 	};
 
+	const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault();
+		setSearchInput(e.target.value);
+	};
+
 	return (
 		<StyledComponent>
 			{currentSlide === 1 ? (
@@ -156,8 +170,10 @@ export default function App(): JSX.Element {
 						<h1 className='header'>Todo List</h1>
 					</div>
 					<Input
+						maxLength={50}
 						size='large'
 						placeholder='search todos'
+						onChange={handleSearch}
 						prefix={<SearchOutlined />}
 					/>
 					<div className='todos'>
@@ -227,7 +243,7 @@ export default function App(): JSX.Element {
 			)}
 		</StyledComponent>
 	);
-}
+};
 
 const StyledComponent = styled.div`
 	height: auto;
@@ -279,3 +295,5 @@ const StyledComponent = styled.div`
 		color: #351054;
 	}
 `;
+
+export default App;

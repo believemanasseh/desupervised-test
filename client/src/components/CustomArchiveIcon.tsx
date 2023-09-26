@@ -1,7 +1,7 @@
 import { InboxOutlined } from '@ant-design/icons';
 import { CustomArchiveProps } from '../types/props';
 
-export default function CustomArchiveIcon(props: CustomArchiveProps) {
+const CustomArchiveIcon = (props: CustomArchiveProps) => {
 	return (
 		<div
 			className={props.className}
@@ -10,4 +10,6 @@ export default function CustomArchiveIcon(props: CustomArchiveProps) {
 			<InboxOutlined />
 		</div>
 	);
-}
+};
+
+export default CustomArchiveIcon;

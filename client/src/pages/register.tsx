@@ -6,7 +6,7 @@ import { useRegisterMutation } from '../redux/features/api/authSlice.ts';
 import AuthForm from '../components/AuthForm';
 import { validateErrors } from '../utils/index.tsx';
 
-export default function Register(): JSX.Element {
+const Register = () => {
 	const [registerMutation] = useRegisterMutation();
 	const navigate = useNavigate();
 
@@ -19,12 +19,14 @@ export default function Register(): JSX.Element {
 				email: formData.get('email'),
 				password: formData.get('password'),
 			}).unwrap();
-			console.log(data, 'returned data');
+			if (data?.error) {
+				validateErrors(data.error);
+				return;
+			}
 			toastr.success('Registration successful', 'Success');
 			navigate('/login');
 		} catch (err) {
 			validateErrors(err);
-			return;
 		}
 	}
 
@@ -38,4 +40,6 @@ export default function Register(): JSX.Element {
 			onSubmit={handleSubmit}
 		/>
 	);
-}
+};
+
+export default Register;

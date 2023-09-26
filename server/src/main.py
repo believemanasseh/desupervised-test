@@ -75,13 +75,18 @@ async def create_todos(
 
 @app.get("/v1/todos", response_model=list[TodoResponseSchema])
 async def fetch_todos(
-    request: Request, db: Annotated[AsyncSession, Depends(get_db)]
+    request: Request,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    search: str | None = None,
 ) -> Any:
     user = await validate_authtoken(db, request.headers.get("authorization"))
     if not user:
         raise HTTPException(status_code=422, detail="Invalid authorization token")
-
-    todos = await get_todos(db, user.id)
+    print(search, "search")
+    if search:
+        todos = await get_todos(db, user.id, search_value=search)
+    else:
+        todos = await get_todos(db, user.id)
     return sorted(todos, key=lambda x: x.id)
 
 

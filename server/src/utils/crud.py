@@ -64,8 +64,13 @@ async def get_todo(
     return await db.scalar(statement)
 
 
-async def get_todos(db: AsyncSession, user_id: int):
-    statement = select(Todo).where(Todo.user_id == user_id)
+async def get_todos(db: AsyncSession, user_id: int, search_value: str | None = None):
+    if search_value:
+        statement = select(Todo).where(
+            and_(Todo.user_id == user_id, Todo.name.contains(search_value))
+        )
+    else:
+        statement = select(Todo).where(Todo.user_id == user_id)
     return await db.scalars(statement)
 
 

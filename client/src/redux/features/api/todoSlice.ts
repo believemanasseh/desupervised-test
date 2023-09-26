@@ -49,6 +49,17 @@ const todoAPI = apiSlice.injectEndpoints({
 				};
 			},
 		}),
+		searchTodos: builder.query({
+			query: (value: string) => {
+				const currentUser = JSON.parse(Cookies.get('currentUser')!!);
+				const authToken = Cookies.get(`token_${currentUser.email}`);
+				return {
+					url: `/todos?search=${value}`,
+					method: 'GET',
+					headers: { Authorization: `${authToken}` },
+				};
+			},
+		}),
 	}),
 });
 
@@ -57,4 +68,5 @@ export const {
 	useUpdateTodoMutation,
 	useDeleteTodoMutation,
 	useFetchTodosQuery,
+	useSearchTodosQuery,
 } = todoAPI;

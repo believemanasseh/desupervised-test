@@ -7,7 +7,7 @@ import AuthForm from '../components/AuthForm';
 import { useLoginMutation } from '../redux/features/api/authSlice';
 import { validateErrors } from '../utils';
 
-export default function Login() {
+const Login = () => {
 	const navigate = useNavigate();
 	const [loginMutation] = useLoginMutation();
 
@@ -52,7 +52,6 @@ export default function Login() {
 			navigate('/');
 		} catch (err) {
 			validateErrors(err);
-			return;
 		}
 	}
 
@@ -66,4 +65,6 @@ export default function Login() {
 			onSubmit={handleSubmit}
 		/>
 	);
-}
+};
+
+export default Login;
