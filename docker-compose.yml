@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  server:
+    container_name: server
+    build:
+      context: .
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./server:/desupervised
+    env_file:
+      - ./server/.env
+    command: sh -c "alembic upgrade head && uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload"
+    depends_on:
+      - db
+
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    restart: unless-stopped
+    volumes:
+      - ./client:/app
+    command: npm run dev
+    ports:
+      - 5173:5173
+
+  db:
+    image: postgres
+    container_name: server-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./server/.env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    ports:
+      - 5433:5432
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: always
+
+volumes:
+  postgres_data:

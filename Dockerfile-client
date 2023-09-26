@@ -1,0 +1,12 @@
+FROM node:18.12.1-alpine3.16
+
+# Add a work directory
+RUN mkdir /app
+WORKDIR /app
+
+# Copy and Install dependencies
+COPY ./client/package.json .
+RUN npm install --legacy-peer-deps
+
+# Copy app files
+COPY ./client .
