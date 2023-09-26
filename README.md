@@ -1,7 +1,9 @@
 
 # Desupervised test
 
-This is a basic CRUD Todo application
+This is a basic CRUD Todo application with not so fancy UI
+
+![Example TODO UI](example.jpg)
 
 ## Prerequisites
 
